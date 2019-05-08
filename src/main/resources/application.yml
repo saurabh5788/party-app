@@ -2,7 +2,7 @@
 spring:
   profiles:
     active:
-      - dev      
+      - test      
 logging:
   pattern:
     console: "%d{yyyy-MM-dd}-%-5p-%-10c:%m%n"    
@@ -67,6 +67,17 @@ spring:
   profiles: test
   application:
     name: party-service-test
+  jpa:
+    generate-ddl: true
+    show-sql: true    
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        ddl-auto: none
+  datasource:
+    url: jdbc:mysql://localhost:3306/party_app_db
+    username: root
+    password:
 logging:
   level:
     com:
@@ -75,8 +86,8 @@ logging:
         springboot: INFO
     org:
       springframework: ERROR
-      hibernate: ERROR  
-eureka:
+      hibernate: INFO
+  eureka:
   instance:
     leaseRenewalIntervalInSeconds: 1
     leaseExpirationDurationInSeconds: 2

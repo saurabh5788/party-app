@@ -19,7 +19,7 @@ import com.learning.springboot.partyapp.repository.PartyRepository;
 @RequestMapping(value = "/party")
 public class PartyController {
 
-	@Value("${eureka.instance.instance-id}")
+	@Value("${eureka.instance.instance-id:NOT SET}")
 	private String instanceId;
 
 	@Autowired
