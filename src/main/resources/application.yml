@@ -1,0 +1,90 @@
+#No Profile Settings
+spring:
+  profiles:
+    active:
+      - dev      
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd}-%-5p-%-10c:%m%n"    
+server:
+  # port: 8080
+  # Enabling Random Vacant Port assignment
+  port: ${PORT:0}
+---
+#Dev Profile
+management:
+  #port: 8080
+  security:
+    enabled: false  
+spring:
+  profiles: dev
+  application:
+    name: party-service-dev
+  # To See H2 Console in Browser:
+  # http://localhost:<<Port>>/h2-console
+  # Enabling H2 Console
+  h2:
+    console:
+      enabled: true
+  jpa:
+    #generate-ddl: false
+    show-sql: true    
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        ddl-auto: validate
+  datasource:
+    url: jdbc:h2:mem:testdb  
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+    platform: h2
+    data: "classpath:party-schema-h2.sql, classpath:party-data-h2.sql"
+logging:
+  level:
+    com:
+      netflix: ERROR
+      learning:
+        springboot: INFO
+    org:
+      springframework: ERROR
+      hibernate: ERROR     
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+    instance-id: "${spring.application.name}:${spring.application.instance_id:${random.value}}"
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/
+    healthcheck:
+      enabled: true
+    lease:
+      duration: 5
+---
+#Test Profile
+spring:
+  profiles: test
+  application:
+    name: party-service-test
+logging:
+  level:
+    com:
+      netflix: ERROR
+      learning:
+        springboot: INFO
+    org:
+      springframework: ERROR
+      hibernate: ERROR  
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+    instance-id: "${spring.application.name}:${spring.application.instance_id:${random.value}}"
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/
+    healthcheck:
+      enabled: true
+    lease:
+      duration: 5
