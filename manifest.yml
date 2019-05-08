@@ -1,0 +1,14 @@
+---
+applications:
+- name: party-app
+  path: target/party-app-1.0-SNAPSHOT.jar
+  #Buildpack will be auto detected
+  #buildpack: https://github.com/cloudfoundry/java-buildpack or
+  buildpack: java_buildpack
+  host: party-app
+  domain: cfapps.io
+  timeout: 60
+  memory: 1G
+  instances: 2
+  env:
+    JBP_CONFIG_OPEN_JDK_JRE: '{jre: { version: 1.8.0_+ }}'
